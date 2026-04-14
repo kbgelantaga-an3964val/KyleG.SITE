@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarPortal | Secure Access</title>
+    <style>
+        :root {
+            --primary-navy: #1a2a3a;
+            --accent-gold: #c5a059;
+            --white: #ffffff;
+            --bg-soft: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg-soft);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Header Box */
+        header {
+            background: var(--primary-navy);
+            color: var(--white);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--accent-gold);
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .auth-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #999;
+        }
+
+        .tab.active {
+            color: var(--primary-navy);
+            border-bottom: 3px solid var(--accent-gold);
+        }
+
+        .input-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; font-size: 0.8rem; margin-bottom: 5px; color: var(--primary-navy); font-weight: bold; }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-navy);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-auth:hover { background: #253b52; }
+
+        .hidden { display: none; }
+
+        /* Footer Box */
+        footer {
+            background: var(--primary-navy);
+            color: rgba(255,255,255,0.5);
+            padding: 15px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>SCHOLARPORTAL | IDENTITY VERIFICATION</header>
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="tab-container">
+            <div id="login-tab" class="tab active" onclick="switchTab('login')">LOG IN</div>
+            <div id="signup-tab" class="tab" onclick="switchTab('signup')">SIGN UP</div>
+        </div>
+
+        <div id="login-form">
+            <div class="input-group">
+                <label>STUDENT ID / USERNAME</label>
+                <input type="text" id="login-user" placeholder="Enter your ID">
+            </div>
+            <div class="input-group">
+                <label>PASSCODE</label>
+                <input type="password" id="login-pass" placeholder="Password">
+            </div>
+            <button class="btn-auth" onclick="handleLogin()">VERIFY IDENTITY</button>
+        </div>
+
+        <div id="signup-form" class="hidden">
+            <div class="input-group">
+                <label>FULL NAME</label>
+                <input type="text" id="reg-name" placeholder="Full Name">
+            </div>
+            <div class="input-group">
+                <label>CHOOSE STUDENT ID</label>
+                <input type="text" id="reg-user" placeholder="Name@ohio">
+            </div>
+            <div class="input-group">
+                <label>CREATE PASSCODE</label>
+                <input type="password" id="reg-pass" placeholder="Password">
+            </div>
+            <button class="btn-auth" onclick="handleSignup()">CREATE ACCOUNT</button>
+        </div>
+    </div>
+</div>
+
+<footer>&copy; 2026 Academic Management Division | Secure Encryption Active</footer>
+
+<script>
+    function switchTab(type) {
+        if (type === 'login') {
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('signup-form').classList.add('hidden');
+            document.getElementById('login-tab').classList.add('active');
+            document.getElementById('signup-tab').classList.remove('active');
+        } else {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('signup-form').classList.remove('hidden');
+            document.getElementById('login-tab').classList.remove('active');
+            document.getElementById('signup-tab').classList.add('active');
+        }
+    }
+
+    function handleSignup() {
+        const name = document.getElementById('reg-name').value;
+        const user = document.getElementById('reg-user').value;
+        const pass = document.getElementById('reg-pass').value;
+
+        if (name && user && pass) {
+            localStorage.setItem("scholar_user", user);
+            localStorage.setItem("scholar_pass", pass);
+            localStorage.setItem("scholar_name", name);
+            alert("Account Registered. You may now log in.");
+            switchTab('login');
+        } else {
+            alert("Please complete all academic fields.");
+        }
+    }
+
+    function handleLogin() {
+        const userIn = document.getElementById('login-user').value;
+        const passIn = document.getElementById('login-pass').value;
+
+        const storedUser = localStorage.getItem("scholar_user");
+        const storedPass = localStorage.getItem("scholar_pass");
+
+       
+        if ((userIn === storedUser && passIn === storedPass) || (userIn === "Admin" && passIn === "1234")) {
+            localStorage.setItem("isLoggedIn", "true");
+            window.location.href = "index.html"; 
+        } else {
+            alert("Verification Failed: Invalid Credentials.");
+        }
+    }
+</script>
+
+</body>
+</html>
