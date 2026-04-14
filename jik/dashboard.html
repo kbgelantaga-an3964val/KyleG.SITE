@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboad</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+
+       
+        nav {
+            background: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .logo { color: #0369a1; font-weight: 800; font-size: 1.5rem; display: flex; align-items: center; }
+        .nav-items { display: flex; gap: 1rem; }
+        .nav-btn {
+            background: #f1f5f9;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        
+        #login-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .login-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+        .login-card input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+        }
+        .btn-blue {
+            width: 100%;
+            background: #0369a1;
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        
+        .container { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+        .step-card { background: white; padding: 2rem; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .option-list { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem; }
+        .option-item {
+            padding: 1.2rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .option-item:hover { background: #f0f9ff; border-color: #0369a1; }
+
+        /* Hidden States */
+        .hidden { display: none !important; }
+
+        /* Footer */
+        .live-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-overlay">
+        <div class="login-card">
+            <h2 style="margin-bottom: 0.5rem;">Patient Access</h2>
+            <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 2rem;">Securely manage your health profile.</p>
+            <input type="text" placeholder="Patient ID or Email">
+            <input type="password" placeholder="Password">
+            <button class="btn-blue" onclick="handleLogin()">REGISTER ACCOUNT ✓ VERIFIED</button>
+            <p style="font-size: 0.75rem; margin-top: 1rem; color: #94a3b8; cursor: pointer;">Forgot credentials?</p>
+        </div>
+    </div>
+
+    <nav>
+        <div class="logo">✚ HealthSync</div>
+        <div class="nav-items">
+            <button class="nav-btn">Book Appointment</button>
+            <button class="nav-btn">Staff Directory</button>
+            <button class="nav-btn">Medical History</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="step-specialty" class="step-card hidden">
+            <h2>Select Specialty</h2>
+            <p style="font-size: 0.9rem; color: #64748b;">Please choose the department for your consultation.</p>
+            <div class="option-list">
+                <div class="option-item" onclick="nextStep('step-doctor', 'General Medicine')">General Medicine</div>
+                <div class="option-item" onclick="nextStep('step-doctor', 'Cardiology')">Cardiology</div>
+                <div class="option-item" onclick="nextStep('step-doctor', 'Pediatrics')">Pediatrics</div>
+                <div class="option-item" onclick="nextStep('step-doctor', 'Dermatology')">Dermatology</div>
+            </div>
+        </div>
+
+        <div id="step-doctor" class="step-card hidden">
+            <h2>Pick a Doctor</h2>
+            <p id="dept-label" style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;"></p>
+            <div class="option-list">
+                <div class="option-item" onclick="nextStep('step-confirm', 'Dr. Sarah Miller')">Dr. Sarah Miller (Available Today)</div>
+                <div class="option-item" onclick="nextStep('step-confirm', 'Dr. James Wilson')">Dr. James Wilson (Available Tomorrow)</div>
+                <p style="text-align: center; color: #0369a1; font-size: 0.85rem; margin-top: 1rem; cursor: pointer;" onclick="nextStep('step-specialty')">← Back to specialties</p>
+            </div>
+        </div>
+
+        <div id="step-confirm" class="step-card hidden">
+            <h2>Confirm Appointment</h2>
+            <div style="margin: 2rem 0; font-size: 0.95rem; line-height: 2;">
+                <p><strong>Department:</strong> <span id="final-dept"></span></p>
+                <p><strong>Practitioner:</strong> <span id="final-doc"></span></p>
+                <p><strong>Scheduled Time:</strong> 09:00 AM</p>
+            </div>
+            <button class="btn-blue" style="background: #16a34a;" onclick="confirmAppt()">CONFIRM & SYNC CALENDAR</button>
+        </div>
+    </div>
+
+    <button class="live-btn" onclick="checkLive()">Check Live Availability</button>
+
+    <script>
+        let selectedDept = "";
+        let selectedDoc = "";
+
+        function handleLogin() {
+            document.getElementById('login-overlay').classList.add('hidden');
+            document.getElementById('step-specialty').classList.remove('hidden');
+        }
+
+        function nextStep(stepId, data) {
+           
+            document.querySelectorAll('.step-card').forEach(card => card.classList.add('hidden'));
+            
+           
+            document.getElementById(stepId).classList.remove('hidden');
+
+            if(data && stepId === 'step-doctor') {
+                selectedDept = data;
+                document.getElementById('dept-label').innerText = "Showing practitioners for " + data;
+                document.getElementById('final-dept').innerText = data;
+            }
+            if(data && stepId === 'step-confirm') {
+                selectedDoc = data;
+                document.getElementById('final-doc').innerText = data;
+            }
+        }
+
+        function confirmAppt() {
+            alert("Booking Confirmed! A summary has been sent to your email.");
+            location.reload();
+        }
+
+        function checkLive() {
+            alert("LIVE STATUS:\nAverage Wait Time: 18 mins\nRooms Occupied: 8/12\nEmergency Status: Normal");
+        }
+    </script>
+
+</body>
+</html>
