@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Library Connect</title>
+    <style>
+        :root {
+            --bg-color: #f5efe1;
+            --sidebar-color: #efe5d1;
+            --accent-color: #c9b48b;
+            --text-dark: #3e332a;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Header Box */
+        header {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            background-color: var(--white);
+            padding: 15px 0;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .signup-container {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            width: 350px;
+            border: 1px solid var(--accent-color);
+            text-align: center;
+        }
+
+        h2 { color: var(--text-dark); margin-bottom: 20px; }
+
+        .input-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: var(--text-dark); }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-register:hover { background-color: #bca67a; }
+
+        .footer-link { margin-top: 20px; font-size: 0.85rem; }
+        .footer-link a { color: #8a7650; text-decoration: none; font-weight: bold; }
+
+        /* Footer Box */
+        footer {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            background-color: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>Library Connect Portal</header>
+
+    <div class="signup-container">
+        <h2>Create Account</h2>
+        <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" id="regName" placeholder="Enter your name">
+        </div>
+        <div class="input-group">
+            <label>New Username</label>
+            <input type="text" id="regUser" placeholder="Choose a username">
+        </div>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="regPass" placeholder="Create a password">
+        </div>
+        <button class="btn-register" onclick="register()">Sign Up</button>
+        
+        <div class="footer-link">
+            Already have an account? <a href="index.html">Log In</a>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 Library Connect | All Rights Reserved</footer>
+
+    <script>
+        function register() {
+            const name = document.getElementById('regName').value;
+            const user = document.getElementById('regUser').value;
+            const pass = document.getElementById('regPass').value;
+
+            if (name && user && pass) {
+                // Save info to LocalStorage so index.html can read it
+                localStorage.setItem("lib_username", user);
+                localStorage.setItem("lib_password", pass);
+                localStorage.setItem("lib_fullname", name);
+
+                alert("Registration Successful! Redirecting to login...");
+                window.location.href = "index.html"; // Go back to login
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+    </script>
+</body>
+</html>

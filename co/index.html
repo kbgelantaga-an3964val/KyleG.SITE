@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Connect</title>
+    <style>
+        :root {
+            --bg-color: #f5efe1;
+            --sidebar-color: #efe5d1;
+            --accent-color: #c9b48b;
+            --text-dark: #3e332a;
+            --white: #ffffff;
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Header --- */
+        header {
+            background-color: var(--white);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--text-dark); }
+        .user-chip { background: var(--sidebar-color); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+        }
+
+        /* --- Sidebar --- */
+        nav {
+            width: 220px;
+            background-color: var(--sidebar-color);
+            padding: 30px 20px;
+        }
+
+        nav ul { list-style: none; padding: 0; }
+        nav ul li {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--accent-color);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        nav ul li:hover { background: var(--accent-color); color: white; }
+
+        /* --- Main Content --- */
+        main {
+            flex: 1;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+        }
+
+        .hero-search {
+            background: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .search-input {
+            padding: 12px;
+            width: 70%;
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            background: var(--accent-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        /* --- Book Grid --- */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .book-card {
+            background: var(--white);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .book-card:hover { transform: translateY(-5px); }
+        .book-card img { width: 100%; height: 220px; border-radius: 5px; object-fit: cover; }
+
+        /* --- Details Panel --- */
+        .details-panel {
+            background: var(--white);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            height: fit-content;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            border-top: 5px solid var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Library Connect</div>
+   
+    </header>
+
+    <div class="main-container">
+        <nav>
+            <ul>
+                <li onclick="alert('Searching...')">Search</li>
+                <li onclick="alert('Loading Members...')">Members</li>
+                <li onclick="alert('Viewing Loans...')">Loans</li>
+                <li onclick="alert('Overdue Check...')"><a style="color: #e67e22;"href="log.html">Log off</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section>
+                <h2>Discover Your Next Read</h2>
+                <div class="hero-search">
+                    <div style="width: 60%;">
+                        <h3>Search the Library</h3>
+                        <p>Find your favorite books and manage activity.</p>
+                        <input type="text" class="search-input" placeholder="Title, author, or genre...">
+                        <button class="btn">Search</button>
+                    </div>
+                    <div style="font-size: 5rem;">📖</div>
+                </div>
+
+                <h3>Available Books</h3>
+                <div class="book-grid">
+                    <div class="book-card" onclick="updateDetails('Bible the book of life', 'Available', 'Yours fully forever')">
+                        <div style="height: 200px; background: #ddd; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;"><img src="images2.jpg"></div>
+                        <p>Bible the book of life</p>
+                        <button class="btn">Loan</button>
+                    </div>
+                    <div class="book-card" onclick="updateDetails('The story theives', 'On Hold', 'Unavailable')">
+                        <div style="height: 200px; background: #ccc; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;"><img src="story-thieves-9781481409216_hr.jpg"></div>
+                        <p>The story thieves</p>
+                        <button class="btn">Hold</button>
+                    </div>
+					
+					<div class="book-card" onclick="updateDetails('The land of stories', 'On Hold', 'In 5 days')">
+                        <div style="height: 200px; background: #ccc; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;"><img src="The_Land_of_Stories.jpg"></div>
+                        <p>The land of stories</p>
+                        <button class="btn">Hold</button>
+                    </div>
+					
+					<div class="book-card" onclick="updateDetails('Love stories', 'On Hold', 'nope cant give it')">
+                        <div style="height: 200px; background: #ccc; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;"><img src="images4.jpg"></div>
+                        <p>Love stories</p>
+                        <button class="btn">Hold</button>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="details-panel" id="details-box">
+                <h3>Book Details</h3>
+                <p id="detail-msg">Click a book to see its availability and status.</p>
+                <div id="book-info" style="display: none;">
+                    <hr>
+                    <h4 id="book-title">Title</h4>
+                    <p><strong>Status:</strong> <span id="book-status">...</span></p>
+                    <p><strong>Due Date:</strong> <span id="book-due">...</span></p>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <footer>
+        <p>Library Educational page</p>
+    </footer>
+
+    <script>
+        function updateDetails(title, status, due) {
+            document.getElementById('detail-msg').style.display = 'none';
+            document.getElementById('book-info').style.display = 'block';
+            
+            document.getElementById('book-title').innerText = title;
+            document.getElementById('book-status').innerText = status;
+            document.getElementById('book-due').innerText = due;
+        }
+    </script>
+</body>
+</html>
