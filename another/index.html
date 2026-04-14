@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockMaster | System Portal</title>
+    <style>
+        /* CSS Variables for easy color management */
+        :root {
+            --bg-color: #f0f0f0;
+            --white: #ffffff;
+            --black: #000000;
+            --accent: #ff4d00; /* Industrial Orange */
+            --border-thick: 4px solid #000000;
+        }
+
+        body {
+            font-family: 'Arial Black', Gadget, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            text-transform: uppercase;
+        }
+
+        /* --- Header Box --- */
+        header {
+            background-color: var(--white);
+            border-bottom: var(--border-thick);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: 0.2s;
+        }
+
+        .nav-links li:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
+
+        .active-tab {
+            background-color: var(--accent);
+            border: 2px solid var(--black);
+        }
+
+        /* --- Main Content Box --- */
+        main {
+            flex: 1;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .content-card {
+            background: var(--white);
+            border: var(--border-thick);
+            padding: 30px;
+            box-shadow: 10px 10px 0px var(--black);
+            margin-bottom: 40px;
+        }
+
+        .status-bar {
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot { height: 8px; width: 8px; background-color: var(--accent); border-radius: 50%; display: inline-block; }
+
+        h1 { font-size: 3rem; line-height: 1; margin: 10px 0; }
+
+        /* --- Footer Box --- */
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: var(--border-thick);
+        }
+
+        .footer-id { font-family: monospace; font-size: 0.9rem; }
+        
+        .btn-action {
+            background: var(--accent);
+            border: 3px solid var(--black);
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--black);
+            text-transform: uppercase;
+        }
+
+        .btn-action:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--black);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <span>||</span> STOCKMASTER
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li onclick="location.href='stok.html'">Stocks</li>
+                <li>DASHBOARD</li>
+               
+            </ul>
+        </nav>
+     
+    </header>
+
+    <main>
+        <div class="status-bar">
+            <span class="dot"></span> 
+        </div>
+        
+        <div class="content-card">
+            <h1>ORDER_MANIFEST</h1>
+            <p style="text-transform: none; font-family: Arial, sans-serif; font-weight: bold;">
+                View and manage outbound logistics. Verify asset IDs before initializing dispatch sequences.
+            </p>
+            <hr style="border: 1px solid black; margin: 20px 0;">
+            
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="border: 2px solid black; padding: 15px; flex: 1; min-width: 200px; background: #eee;">
+                    <small>#ORD-991</small>
+                    <div style="margin: 10px 0; font-weight: bold;">WAREHOUSE_B DISPATCH</div>
+                    <div style="color: green; font-size: 0.8rem;">[STATUS: PENDING]</div>
+                </div>
+                <div style="border: 2px solid black; padding: 15px; flex: 1; min-width: 200px; background: #eee;">
+                    <small>#ORD-992</small>
+                    <div style="margin: 10px 0; font-weight: bold;">SECTOR_7 REFILL</div>
+                    <div style="color: red; font-size: 0.8rem;">[STATUS: CRITICAL]</div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-action">Initialize New Order</button>
+    </main>
+
+    <footer>
+        <div class="footer-id">Stock master</div>
+        <div>Overbleeding head</div>
+        <div style="font-size: 0.7rem;" "color: #e67e22;"><a href="log in.html">log off</div>
+    </footer>
+
+</body>
+</html>

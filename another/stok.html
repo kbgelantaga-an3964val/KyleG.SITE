@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stok</title>
+    <style>
+        :root {
+            --bg: #f0f0f0;
+            --white: #ffffff;
+            --black: #000000;
+            --accent: #ff4d00;
+            --border: 4px solid #000000;
+        }
+
+        body {
+            font-family: 'Arial Black', sans-serif;
+            margin: 0;
+            background-color: var(--bg);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            text-transform: uppercase;
+        }
+
+       
+        header {
+            background: var(--white);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: var(--border);
+        }
+
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links li { cursor: pointer; font-size: 0.8rem; }
+        .active { background: var(--accent); padding: 5px 10px; border: 2px solid black; }
+
+      
+        main {
+            flex: 1;
+            padding: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .control-panel {
+            background: var(--white);
+            border: var(--border);
+            padding: 30px;
+            box-shadow: 10px 10px 0px var(--black);
+        }
+
+        .stock-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .controls { display: flex; align-items: center; gap: 15px; }
+
+        .btn-qty {
+            width: 40px;
+            height: 40px;
+            background: var(--black);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .qty-display {
+            font-size: 1.5rem;
+            width: 80px;
+            text-align: center;
+            border: 2px solid black;
+            background: #eee;
+        }
+
+        .btn-save {
+            background: var(--accent);
+            border: var(--border);
+            padding: 15px;
+            width: 100%;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+      
+        footer {
+            background: var(--black);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">|| STOCKMASTER</div>
+        <nav>
+            <ul class="nav-links">
+                <li class="active">Stock Control</li>
+                <li onclick="location.href='index.html'">Back</li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="control-panel">
+            <h1>Manual Stock Override</h1>
+            <p style="text-transform: none; font-family: sans-serif;">Adjust inventory levels manually. All changes are logged to the local database.</p>
+
+            <div class="stock-item">
+                <div>
+                    <strong>Heavy Duty Shelving</strong><br>
+                    <small>SKU-8912</small>
+                </div>
+                <div class="controls">
+                    <button class="btn-qty" onclick="changeQty('shelf', -1)">-</button>
+                    <div class="qty-display" id="shelf-qty">1024</div>
+                    <button class="btn-qty" onclick="changeQty('shelf', 1)">+</button>
+                </div>
+            </div>
+
+            <div class="stock-item">
+                <div>
+                    <strong>Pallet Jacks</strong><br>
+                    <small>SKU-8913</small>
+                </div>
+                <div class="controls">
+                    <button class="btn-qty" onclick="changeQty('jack', -1)">-</button>
+                    <div class="qty-display" id="jack-qty">12</div>
+                    <button class="btn-qty" onclick="changeQty('jack', 1)">+</button>
+                </div>
+            </div>
+
+            <button class="btn-save" onclick="saveStock()">COMMIT CHANGES TO SYSTEM</button>
+        </div>
+    </main>
+
+    <footer>
+        SESSION: ACTIVE | TERMINAL ID: SM-99-A
+    </footer>
+
+    <script>
+        
+        window.onload = function() {
+            if(localStorage.getItem("shelf_qty")) {
+                document.getElementById('shelf-qty').innerText = localStorage.getItem("shelf_qty");
+                document.getElementById('jack-qty').innerText = localStorage.getItem("jack-qty");
+            }
+        }
+
+        function changeQty(id, amount) {
+            let element = document.getElementById(id + '-qty');
+            let current = parseInt(element.innerText);
+            if (current + amount >= 0) {
+                element.innerText = current + amount;
+            }
+        }
+
+        function saveStock() {
+            const shelf = document.getElementById('shelf-qty').innerText;
+            const jack = document.getElementById('jack-qty').innerText;
+            
+            localStorage.setItem("shelf_qty", shelf);
+            localStorage.setItem("jack_qty", jack);
+            
+            alert("SYSTEM UPDATED: DATA COMMITTED.");
+        }
+    </script>
+</body>
+</html>

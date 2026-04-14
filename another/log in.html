@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <style>
+        :root {
+            --bg: #f0f0f0;
+            --white: #ffffff;
+            --black: #000000;
+            --accent: #ff4d00;
+            --border-thick: 4px solid #000000;
+        }
+
+        body {
+            font-family: 'Arial Black', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            text-transform: uppercase;
+        }
+
+        
+        header {
+            background: var(--white);
+            padding: 15px 40px;
+            border-bottom: var(--border-thick);
+            text-align: center;
+        }
+
+        .logo { font-size: 1.5rem; letter-spacing: -1px; }
+
+       
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: var(--white);
+            border: var(--border-thick);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            box-shadow: 12px 12px 0px var(--black);
+        }
+
+        h2 { margin-top: 0; font-size: 1.8rem; border-bottom: 2px solid var(--black); padding-bottom: 10px; }
+
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 0.8rem; margin-bottom: 5px; }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--black);
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .btn-main {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent);
+            border: var(--border-thick);
+            font-family: 'Arial Black', sans-serif;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--black);
+            transition: 0.1s;
+        }
+
+        .btn-main:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--black); }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .error { color: red; font-size: 0.7rem; margin-bottom: 10px; display: none; }
+
+       
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">STOCKMASTER ACCESS_PORTAL</div>
+    </header>
+
+    <div class="container">
+        <div id="login-box" class="auth-card">
+            <h2>OPERATOR LOGIN</h2>
+            <p id="login-err" class="error">CREDENTIAL_REJECTED: ACCESS DENIED</p>
+            
+            <div class="form-group">
+                <label>OPERATOR_ID</label>
+                <input type="text" id="user-in" placeholder="USR-9921">
+            </div>
+            <div class="form-group">
+                <label>PASSCODE</label>
+                <input type="password" id="pass-in" placeholder="********">
+            </div>
+            
+            <button class="btn-main" onclick="handleLogin()">AUTHORIZE ACCESS</button>
+            <div class="toggle-link" onclick="toggleForm()">REQUEST NEW_ID (SIGN UP)</div>
+        </div>
+
+        <div id="signup-box" class="auth-card hidden">
+            <h2>CREATE OPERATOR</h2>
+            
+            <div class="form-group">
+                <label>FULL_NAME</label>
+                <input type="text" id="reg-name" placeholder="NAME">
+            </div>
+            <div class="form-group">
+                <label>NEW_OPERATOR_ID</label>
+                <input type="text" id="reg-user" placeholder="CHOOSE ID">
+            </div>
+            <div class="form-group">
+                <label>ASSIGN_PASSCODE</label>
+                <input type="password" id="reg-pass" placeholder="********">
+            </div>
+            
+            <button class="btn-main" onclick="handleSignup()">INITIALIZE ID</button>
+            <div class="toggle-link" onclick="toggleForm()">BACK TO LOGIN</div>
+        </div>
+    </div>
+
+    <footer>
+        ENCRYPTION-STATUS: HIGH LIKE ME
+    </footer>
+
+    <script>
+       
+        function toggleForm() {
+            document.getElementById('login-box').classList.toggle('hidden');
+            document.getElementById('signup-box').classList.toggle('hidden');
+        }
+
+        
+        function handleSignup() {
+            const name = document.getElementById('reg-name').value;
+            const user = document.getElementById('reg-user').value;
+            const pass = document.getElementById('reg-pass').value;
+
+            if (name && user && pass) {
+                localStorage.setItem("sm_user", user);
+                localStorage.setItem("sm_pass", pass);
+                localStorage.setItem("sm_name", name);
+                alert("OPERATOR_ID INITIALIZED. PROCEED TO LOGIN.");
+                toggleForm();
+            } else {
+                alert("INPUT REQUIRED: ALL FIELDS MUST BE VALID.");
+            }
+        }
+
+      
+        function handleLogin() {
+            const inputUser = document.getElementById('user-in').value;
+            const inputPass = document.getElementById('pass-in').value;
+            const errorMsg = document.getElementById('login-err');
+
+        
+            const savedUser = localStorage.getItem("sm_user") || "Admin";
+            const savedPass = localStorage.getItem("sm_pass") || "1234";
+
+            if (inputUser === savedUser && inputPass === savedPass) {
+                localStorage.setItem("isLoggedIn", "true");
+                // Redirects to your main dashboard
+                window.location.href = "index.html"; 
+            } else {
+                errorMsg.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
